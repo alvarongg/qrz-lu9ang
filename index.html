@@ -512,15 +512,67 @@
             return translations[userLang] ? userLang : 'es';
         }
 
+        // Safe storage functions that work in iframes
+        function safeSetStorage(key, value) {
+            try {
+                localStorage.setItem(key, value);
+                return true;
+            } catch (e) {
+                // localStorage not available (iframe restrictions), use cookie as fallback
+                try {
+                    document.cookie = key + '=' + value + '; path=/; max-age=31536000; SameSite=Lax';
+                    return true;
+                } catch (err) {
+                    console.warn('Storage not available:', err);
+                    return false;
+                }
+            }
+        }
+
+        function safeGetStorage(key) {
+            try {
+                return localStorage.getItem(key);
+            } catch (e) {
+                // Try to get from cookie
+                try {
+                    const nameEQ = key + "=";
+                    const ca = document.cookie.split(';');
+                    for (let i = 0; i < ca.length; i++) {
+                        let c = ca[i];
+                        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+                    }
+                    return null;
+                } catch (err) {
+                    console.warn('Cookie read failed:', err);
+                    return null;
+                }
+            }
+        }
+
         // Apply translations
         function applyTranslations(lang) {
+            console.log('Applying translations for:', lang);
+            
+            if (!translations[lang]) {
+                console.warn('Language not found:', lang, 'using Spanish');
+                lang = 'es';
+            }
+            
             const t = translations[lang];
             
             // Update title
-            document.title = t.title;
+            try {
+                document.title = t.title;
+            } catch (e) {
+                console.warn('Cannot update title in iframe');
+            }
             
             // Store elements with data attributes for translation
-            document.querySelectorAll('[data-i18n]').forEach(element => {
+            const elements = document.querySelectorAll('[data-i18n]');
+            console.log('Found', elements.length, 'elements to translate');
+            
+            elements.forEach(element => {
                 const key = element.getAttribute('data-i18n');
                 if (t[key]) {
                     element.textContent = t[key];
@@ -534,27 +586,43 @@
             }
 
             // Save language preference
-            localStorage.setItem('preferredLanguage', lang);
+            safeSetStorage('preferredLanguage', lang);
+            
+            console.log('Translation complete for:', lang);
         }
 
         // Change language manually
         function changeLanguage(lang) {
+            console.log('Change language called with:', lang);
             applyTranslations(lang);
-            console.log('Language changed to:', lang);
         }
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOMContentLoaded - Initializing language system');
+            
             // Check if user has a saved language preference
-            const savedLang = localStorage.getItem('preferredLanguage');
+            const savedLang = safeGetStorage('preferredLanguage');
+            console.log('Saved language:', savedLang);
             
             // Use saved language or detect from browser
             const langToUse = savedLang || detectLanguage();
+            console.log('Language to use:', langToUse);
             
             applyTranslations(langToUse);
             
-            // Log detected/used language for debugging
-            console.log('Language set to:', langToUse);
+            // Add event listener to selector (in case onchange doesn't work in iframe)
+            const selector = document.getElementById('languageSelect');
+            if (selector) {
+                selector.addEventListener('change', function(e) {
+                    console.log('Selector changed to:', e.target.value);
+                    changeLanguage(e.target.value);
+                });
+                console.log('Event listener attached to language selector');
+            }
+            
+            // Log for debugging
+            console.log('Language system initialized with:', langToUse);
         });
     </script>
 </head>

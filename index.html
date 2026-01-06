@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LU9ANG - Álvaro | Data Consultant & Amateur Radio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0066cc;
+            --primary-dark: #004499;
+            --secondary: #ff6b35;
+            --accent-light: #e8f4ff;
+            --text-dark: #1a1a1a;
+            --text-light: #666;
+            --border-color: #ddd;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f4ff 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 102, 204, 0.1);
+            overflow: hidden;
+        }
+
+        /* Header Section */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 60px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/><circle cx="50" cy="50" r="30" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/><line x1="50" y1="10" x2="50" y2="90" stroke="rgba(255,255,255,0.1)" stroke-width="1"/><line x1="10" y1="50" x2="90" y2="50" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></svg>') no-repeat;
+            opacity: 0.3;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .callsign {
+            font-size: 2.2em;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .name {
+            font-size: 2.8em;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .titles {
+            font-size: 1.1em;
+            opacity: 0.95;
+            margin-top: 20px;
+            border-top: 2px solid rgba(255,255,255,0.3);
+            padding-top: 15px;
+        }
+
+        .title-item {
+            margin: 8px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .title-item::before {
+            content: '▸';
+            margin-right: 10px;
+            font-size: 1.3em;
+        }
+
+        /* Main Content */
+        .content {
+            padding: 50px 40px;
+        }
+
+        .section {
+            margin-bottom: 45px;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1.6em;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid var(--secondary);
+            display: inline-block;
+        }
+
+        .section-subtitle {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .bio-text {
+            color: var(--text-light);
+            margin-bottom: 15px;
+            line-height: 1.8;
+            font-size: 1em;
+        }
+
+        /* Equipment Grid */
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .equipment-box {
+            background: linear-gradient(135deg, rgba(0, 102, 204, 0.05) 0%, rgba(255, 107, 53, 0.05) 100%);
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            padding: 18px;
+            font-weight: 500;
+            color: var(--primary);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .equipment-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--secondary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .equipment-box:hover {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 102, 204, 0.25);
+        }
+
+        .equipment-box:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* Radio Operating Section */
+        .radio-section {
+            background: linear-gradient(135deg, rgba(0, 102, 204, 0.05) 0%, rgba(255, 107, 53, 0.05) 100%);
+            border-left: 4px solid var(--secondary);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 18px;
+        }
+
+        .radio-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .radio-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .radio-content h4 {
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .radio-content p {
+            color: var(--text-light);
+            font-size: 0.95em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px 25px;
+            }
+
+            .content {
+                padding: 30px 25px;
+            }
+
+            .name {
+                font-size: 2em;
+            }
+
+            .titles {
+                font-size: 0.95em;
+            }
+
+            .equipment-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+
+            .section-title {
+                font-size: 1.4em;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            animation: fadeInUp 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .section:nth-child(1) { animation-delay: 0.1s; }
+        .section:nth-child(2) { animation-delay: 0.2s; }
+        .section:nth-child(3) { animation-delay: 0.3s; }
+        .section:nth-child(4) { animation-delay: 0.4s; }
+
+        .equipment-box {
+            animation: fadeInUp 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .equipment-box:nth-child(1) { animation-delay: 0.15s; }
+        .equipment-box:nth-child(2) { animation-delay: 0.20s; }
+        .equipment-box:nth-child(3) { animation-delay: 0.25s; }
+        .equipment-box:nth-child(4) { animation-delay: 0.30s; }
+        .equipment-box:nth-child(5) { animation-delay: 0.35s; }
+        .equipment-box:nth-child(6) { animation-delay: 0.40s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="callsign">LU9ANG</div>
+                <div class="name">Álvaro</div>
+                <div class="titles">
+                    <div class="title-item">Consultor Experto en Gestión de Datos en AWS</div>
+                    <div class="title-item">Ingeniero de Datos Senior & Radio Aficionado</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <!-- About Section -->
+            <section class="section">
+                <h2 class="section-title">Acerca de Mí</h2>
+                <p class="bio-text">
+                    Consultor especializado en arquitecturas de datos en AWS. Fuera del ámbito profesional, soy radio aficionado apasionado. Operador activo en VHF desde Argentina con planes de incursionar en HF modo QRP, y con interés en activaciones SOTA, POTA y BOTA. Combiné mi experiencia técnica con la radio afición de una manera genuina y complementaria.
+                </p>
+            </section>
+
+            <!-- Equipment Section -->
+            <section class="section">
+                <h2 class="section-title">Equipamiento</h2>
+                
+                <div class="section-subtitle">Transceptores</div>
+                <div class="equipment-grid">
+                    <div class="equipment-box">Baofeng UV32</div>
+                    <div class="equipment-box">Anytone AT-778UV</div>
+                    <div class="equipment-box">Xiegu X6200</div>
+                </div>
+
+                <div class="section-subtitle">Antenas</div>
+                <div class="equipment-grid">
+                    <div class="equipment-box">Antena Ringo VHF</div>
+                    <div class="equipment-box">Antena QRP Guys EFHW</div>
+                    <div class="equipment-box">Antena JPC12</div>
+                </div>
+            </section>
+
+            <!-- Radio Activity -->
+            <section class="section">
+                <h2 class="section-title">Actividad de Radio</h2>
+                
+                <div class="radio-section">
+                    <div class="radio-item">
+                        <div class="radio-icon">📡</div>
+                        <div class="radio-content">
+                            <h4>Operación VHF</h4>
+                            <p>Operador activo en VHF desde Argentina, participando regularmente en actividades locales y redes digitales.</p>
+                        </div>
+                    </div>
+
+                    <div class="radio-item">
+                        <div class="radio-icon">🔧</div>
+                        <div class="radio-content">
+                            <h4>Proyectos Técnicos</h4>
+                            <p>Experiencia en configuración de equipamiento, repetidores, y sistemas digitales. Interés en MMDVM y hotspots.</p>
+                        </div>
+                    </div>
+
+                    <div class="radio-item">
+                        <div class="radio-icon">⛰️</div>
+                        <div class="radio-content">
+                            <h4>Futuras Activaciones</h4>
+                            <p>Planes para incursionar en HF con operación QRP y participación en SOTA, POTA y BOTA a medida que expanda mis habilidades.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interests & Hobbies -->
+            <section class="section">
+                <h2 class="section-title">Intereses & Hobbies</h2>
+                <p class="bio-text">
+                    Disfruto coleccionando videojuegos antiguos de distintas plataformas y épocas. También me apasionan los videojuegos en general, en particular fantasy RPGs y simuladores. Fuera de los juegos, soy Dungeon Master en mi primera campaña de D&D, toco bajo (hard rock y experimental), y disfruto de una variedad de proyectos técnicos personales.
+                </p>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

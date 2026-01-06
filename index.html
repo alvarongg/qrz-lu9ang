@@ -82,6 +82,13 @@
             display: inline-block;
         }
 
+        .flag-icon {
+            display: inline-block;
+            margin-left: 15px;
+            font-size: 1.8em;
+            vertical-align: middle;
+        }
+
         .titles {
             font-size: 0.95em;
             opacity: 0.95;
@@ -251,6 +258,48 @@
             line-height: 1.5;
         }
 
+        /* Location Links */
+        .location-links {
+            background: linear-gradient(135deg, rgba(0, 102, 204, 0.05) 0%, rgba(255, 107, 53, 0.05) 100%);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .location-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .location-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .location-item a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .location-item a:hover {
+            background: rgba(0, 102, 204, 0.1);
+            color: var(--primary-dark);
+            transform: translateX(5px);
+        }
+
+        .location-item a::before {
+            content: '📍';
+            font-size: 1.2em;
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .content {
@@ -314,340 +363,18 @@
         .equipment-box:nth-child(4) { animation-delay: 0.30s; }
         .equipment-box:nth-child(5) { animation-delay: 0.35s; }
         .equipment-box:nth-child(6) { animation-delay: 0.40s; }
-
-        /* Language Selector */
-        .language-selector {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            z-index: 100;
-        }
-
-        .language-selector select {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.4);
-            border-radius: 6px;
-            padding: 6px 12px;
-            font-size: 0.9em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .language-selector select:hover {
-            background: rgba(255, 255, 255, 0.3);
-            border-color: rgba(255, 255, 255, 0.6);
-        }
-
-        .language-selector select option {
-            background: var(--primary-dark);
-            color: white;
-        }
     </style>
-    <script>
-        // Translations object
-        const translations = {
-            es: {
-                title: "LU9ANG - Alvaro Garcia | Data Consultant & Amateur Radio",
-                callsign: "LU9ANG",
-                name: "Alvaro Garcia",
-                title1: "Consultor Experto en Gestión de Datos en AWS",
-                title2: "Ingeniero de Datos Senior & Radio Aficionado",
-                aboutTitle: "Acerca de Mí",
-                aboutText: "Consultor especializado en arquitecturas de datos en AWS. Fuera del ámbito profesional, soy radio aficionado apasionado. Operador activo en VHF desde Argentina con planes de incursionar en HF modo QRP, y con interés en activaciones SOTA, POTA y BOTA. Combiné mi experiencia técnica con la radio afición de una manera genuina y complementaria.",
-                equipmentTitle: "Equipamiento",
-                transceivers: "Transceptores",
-                antennas: "Antenas",
-                radioTitle: "Actividad de Radio",
-                vhfTitle: "Operación VHF",
-                vhfText: "Operador activo en VHF desde Argentina, participando regularmente en actividades locales y redes digitales.",
-                techTitle: "Proyectos Técnicos",
-                techText: "Experiencia en configuración de equipamiento, repetidores, y sistemas digitales. Interés en MMDVM y hotspots.",
-                activationTitle: "Futuras Activaciones",
-                activationText: "Planes para incursionar en HF con operación QRP y participación en SOTA, POTA y BOTA a medida que expanda mis habilidades."
-            },
-            en: {
-                title: "LU9ANG - Alvaro Garcia | Data Consultant & Amateur Radio",
-                callsign: "LU9ANG",
-                name: "Alvaro Garcia",
-                title1: "AWS Data Management Expert Consultant",
-                title2: "Senior Data Engineer & Amateur Radio Operator",
-                aboutTitle: "About Me",
-                aboutText: "Consultant specialized in AWS data architectures. Outside of the professional field, I am a passionate amateur radio operator. Active VHF operator from Argentina with plans to venture into HF QRP mode, and interested in SOTA, POTA and BOTA activations. I combine my technical expertise with amateur radio in a genuine and complementary way.",
-                equipmentTitle: "Equipment",
-                transceivers: "Transceivers",
-                antennas: "Antennas",
-                radioTitle: "Radio Activity",
-                vhfTitle: "VHF Operation",
-                vhfText: "Active VHF operator from Argentina, regularly participating in local activities and digital networks.",
-                techTitle: "Technical Projects",
-                techText: "Experience in equipment configuration, repeaters, and digital systems. Interest in MMDVM and hotspots.",
-                activationTitle: "Future Activations",
-                activationText: "Plans to venture into HF with QRP operation and participation in SOTA, POTA and BOTA as I expand my skills."
-            },
-            pt: {
-                title: "LU9ANG - Alvaro Garcia | Consultor de Dados & Rádio Amador",
-                callsign: "LU9ANG",
-                name: "Alvaro Garcia",
-                title1: "Consultor Especialista em Gestão de Dados AWS",
-                title2: "Engenheiro de Dados Sênior & Radioamador",
-                aboutTitle: "Sobre Mim",
-                aboutText: "Consultor especializado em arquiteturas de dados na AWS. Fora do âmbito profissional, sou um radioamador apaixonado. Operador ativo em VHF da Argentina com planos de incursionar em HF modo QRP, e com interesse em ativações SOTA, POTA e BOTA. Combinei minha experiência técnica com o rádio amador de maneira genuína e complementar.",
-                equipmentTitle: "Equipamento",
-                transceivers: "Transceptores",
-                antennas: "Antenas",
-                radioTitle: "Atividade de Rádio",
-                vhfTitle: "Operação VHF",
-                vhfText: "Operador ativo em VHF da Argentina, participando regularmente de atividades locais e redes digitais.",
-                techTitle: "Projetos Técnicos",
-                techText: "Experiência em configuração de equipamentos, repetidoras e sistemas digitais. Interesse em MMDVM e hotspots.",
-                activationTitle: "Ativações Futuras",
-                activationText: "Planos para incursionar em HF com operação QRP e participação em SOTA, POTA e BOTA à medida que expando minhas habilidades."
-            },
-            fr: {
-                title: "LU9ANG - Alvaro Garcia | Consultant en Données & Radioamateur",
-                callsign: "LU9ANG",
-                name: "Alvaro Garcia",
-                title1: "Consultant Expert en Gestion de Données AWS",
-                title2: "Ingénieur de Données Senior & Radioamateur",
-                aboutTitle: "À Propos de Moi",
-                aboutText: "Consultant spécialisé dans les architectures de données sur AWS. En dehors du domaine professionnel, je suis un radioamateur passionné. Opérateur actif en VHF depuis l'Argentine avec des projets d'incursion en HF mode QRP, et avec un intérêt pour les activations SOTA, POTA et BOTA. Je combine mon expertise technique avec la radioamateur de manière authentique et complémentaire.",
-                equipmentTitle: "Équipement",
-                transceivers: "Émetteurs-Récepteurs",
-                antennas: "Antennes",
-                radioTitle: "Activité Radio",
-                vhfTitle: "Opération VHF",
-                vhfText: "Opérateur actif en VHF depuis l'Argentine, participant régulièrement aux activités locales et aux réseaux numériques.",
-                techTitle: "Projets Techniques",
-                techText: "Expérience dans la configuration d'équipements, de répéteurs et de systèmes numériques. Intérêt pour MMDVM et hotspots.",
-                activationTitle: "Activations Futures",
-                activationText: "Projets d'incursion en HF avec opération QRP et participation à SOTA, POTA et BOTA au fur et à mesure que j'élargis mes compétences."
-            },
-            de: {
-                title: "LU9ANG - Alvaro Garcia | Datenberater & Amateurfunk",
-                callsign: "LU9ANG",
-                name: "Alvaro Garcia",
-                title1: "AWS Datenmanagement-Experte",
-                title2: "Senior Dateningenieur & Amateurfunker",
-                aboutTitle: "Über Mich",
-                aboutText: "Berater spezialisiert auf AWS-Datenarchitekturen. Außerhalb des beruflichen Bereichs bin ich ein leidenschaftlicher Amateurfunker. Aktiver VHF-Betreiber aus Argentinien mit Plänen für HF-QRP-Betrieb und Interesse an SOTA-, POTA- und BOTA-Aktivierungen. Ich kombiniere meine technische Expertise mit Amateurfunk auf authentische und ergänzende Weise.",
-                equipmentTitle: "Ausrüstung",
-                transceivers: "Transceiver",
-                antennas: "Antennen",
-                radioTitle: "Funkaktivität",
-                vhfTitle: "VHF-Betrieb",
-                vhfText: "Aktiver VHF-Betreiber aus Argentinien, regelmäßige Teilnahme an lokalen Aktivitäten und digitalen Netzen.",
-                techTitle: "Technische Projekte",
-                techText: "Erfahrung in Gerätekonfiguration, Repeatern und digitalen Systemen. Interesse an MMDVM und Hotspots.",
-                activationTitle: "Zukünftige Aktivierungen",
-                activationText: "Pläne für HF-Betrieb mit QRP-Betrieb und Teilnahme an SOTA, POTA und BOTA, während ich meine Fähigkeiten erweitere."
-            },
-            it: {
-                title: "LU9ANG - Alvaro Garcia | Consulente Dati & Radioamatore",
-                callsign: "LU9ANG",
-                name: "Alvaro Garcia",
-                title1: "Consulente Esperto in Gestione Dati AWS",
-                title2: "Ingegnere Dati Senior & Radioamatore",
-                aboutTitle: "Chi Sono",
-                aboutText: "Consulente specializzato in architetture dati su AWS. Al di fuori dell'ambito professionale, sono un radioamatore appassionato. Operatore attivo in VHF dall'Argentina con piani di incursione in HF modalità QRP, e con interesse nelle attivazioni SOTA, POTA e BOTA. Ho combinato la mia esperienza tecnica con il radioamatoriale in modo genuino e complementare.",
-                equipmentTitle: "Attrezzatura",
-                transceivers: "Ricetrasmettitori",
-                antennas: "Antenne",
-                radioTitle: "Attività Radio",
-                vhfTitle: "Operazione VHF",
-                vhfText: "Operatore attivo in VHF dall'Argentina, partecipando regolarmente ad attività locali e reti digitali.",
-                techTitle: "Progetti Tecnici",
-                techText: "Esperienza nella configurazione di attrezzature, ripetitori e sistemi digitali. Interesse in MMDVM e hotspot.",
-                activationTitle: "Attivazioni Future",
-                activationText: "Piani per incursione in HF con operazione QRP e partecipazione a SOTA, POTA e BOTA man mano che espando le mie competenze."
-            },
-            ja: {
-                title: "LU9ANG - Alvaro Garcia | データコンサルタント & アマチュア無線",
-                callsign: "LU9ANG",
-                name: "Alvaro Garcia",
-                title1: "AWSデータ管理エキスパートコンサルタント",
-                title2: "シニアデータエンジニア & アマチュア無線オペレーター",
-                aboutTitle: "自己紹介",
-                aboutText: "AWSデータアーキテクチャを専門とするコンサルタント。専門分野外では、情熱的なアマチュア無線オペレーターです。アルゼンチンからの活発なVHFオペレーターで、HF QRPモードへの進出を計画しており、SOTA、POTA、BOTAのアクティベーションに興味があります。技術的専門知識とアマチュア無線を真正かつ相補的な方法で組み合わせています。",
-                equipmentTitle: "機器",
-                transceivers: "トランシーバー",
-                antennas: "アンテナ",
-                radioTitle: "無線活動",
-                vhfTitle: "VHF運用",
-                vhfText: "アルゼンチンからの活発なVHFオペレーターで、定期的に地元の活動やデジタルネットワークに参加しています。",
-                techTitle: "技術プロジェクト",
-                techText: "機器の設定、中継器、デジタルシステムの経験。MMDVMとホットスポットに興味があります。",
-                activationTitle: "今後のアクティベーション",
-                activationText: "スキルを拡大するにつれて、QRP運用でHFに進出し、SOTA、POTA、BOTAに参加する計画。"
-            },
-            ru: {
-                title: "LU9ANG - Alvaro Garcia | Консультант по Данным & Радиолюбитель",
-                callsign: "LU9ANG",
-                name: "Alvaro Garcia",
-                title1: "Эксперт-консультант по Управлению Данными AWS",
-                title2: "Старший Инженер Данных & Радиолюбитель",
-                aboutTitle: "Обо Мне",
-                aboutText: "Консультант, специализирующийся на архитектурах данных AWS. За пределами профессиональной сферы я увлеченный радиолюбитель. Активный VHF-оператор из Аргентины с планами заняться HF режимом QRP, и с интересом к активациям SOTA, POTA и BOTA. Я сочетаю свой технический опыт с радиолюбительством подлинным и взаимодополняющим образом.",
-                equipmentTitle: "Оборудование",
-                transceivers: "Трансиверы",
-                antennas: "Антенны",
-                radioTitle: "Радиоактивность",
-                vhfTitle: "VHF Работа",
-                vhfText: "Активный VHF-оператор из Аргентины, регулярно участвующий в местных мероприятиях и цифровых сетях.",
-                techTitle: "Технические Проекты",
-                techText: "Опыт настройки оборудования, репитеров и цифровых систем. Интерес к MMDVM и хотспотам.",
-                activationTitle: "Будущие Активации",
-                activationText: "Планы заняться HF с QRP-работой и участием в SOTA, POTA и BOTA по мере расширения моих навыков."
-            }
-        };
-
-        // Detect browser language
-        function detectLanguage() {
-            let userLang = navigator.language || navigator.userLanguage;
-            userLang = userLang.split('-')[0]; // Get only the language code (e.g., 'en' from 'en-US')
-            
-            // Check if translation exists for this language, otherwise default to Spanish
-            return translations[userLang] ? userLang : 'es';
-        }
-
-        // Safe storage functions that work in iframes
-        function safeSetStorage(key, value) {
-            try {
-                localStorage.setItem(key, value);
-                return true;
-            } catch (e) {
-                // localStorage not available (iframe restrictions), use cookie as fallback
-                try {
-                    document.cookie = key + '=' + value + '; path=/; max-age=31536000; SameSite=Lax';
-                    return true;
-                } catch (err) {
-                    console.warn('Storage not available:', err);
-                    return false;
-                }
-            }
-        }
-
-        function safeGetStorage(key) {
-            try {
-                return localStorage.getItem(key);
-            } catch (e) {
-                // Try to get from cookie
-                try {
-                    const nameEQ = key + "=";
-                    const ca = document.cookie.split(';');
-                    for (let i = 0; i < ca.length; i++) {
-                        let c = ca[i];
-                        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-                        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-                    }
-                    return null;
-                } catch (err) {
-                    console.warn('Cookie read failed:', err);
-                    return null;
-                }
-            }
-        }
-
-        // Apply translations
-        function applyTranslations(lang) {
-            console.log('Applying translations for:', lang);
-            
-            if (!translations[lang]) {
-                console.warn('Language not found:', lang, 'using Spanish');
-                lang = 'es';
-            }
-            
-            const t = translations[lang];
-            
-            // Update title
-            try {
-                document.title = t.title;
-            } catch (e) {
-                console.warn('Cannot update title in iframe');
-            }
-            
-            // Store elements with data attributes for translation
-            const elements = document.querySelectorAll('[data-i18n]');
-            console.log('Found', elements.length, 'elements to translate');
-            
-            elements.forEach(element => {
-                const key = element.getAttribute('data-i18n');
-                if (t[key]) {
-                    element.textContent = t[key];
-                }
-            });
-
-            // Update language selector
-            const selector = document.getElementById('languageSelect');
-            if (selector) {
-                selector.value = lang;
-            }
-
-            // Save language preference
-            safeSetStorage('preferredLanguage', lang);
-            
-            console.log('Translation complete for:', lang);
-        }
-
-        // Change language manually
-        function changeLanguage(lang) {
-            console.log('Change language called with:', lang);
-            applyTranslations(lang);
-        }
-
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOMContentLoaded - Initializing language system');
-            
-            // Check if user has a saved language preference
-            const savedLang = safeGetStorage('preferredLanguage');
-            console.log('Saved language:', savedLang);
-            
-            // Use saved language or detect from browser
-            const langToUse = savedLang || detectLanguage();
-            console.log('Language to use:', langToUse);
-            
-            applyTranslations(langToUse);
-            
-            // Add event listener to selector (in case onchange doesn't work in iframe)
-            const selector = document.getElementById('languageSelect');
-            if (selector) {
-                selector.addEventListener('change', function(e) {
-                    console.log('Selector changed to:', e.target.value);
-                    changeLanguage(e.target.value);
-                });
-                console.log('Event listener attached to language selector');
-            }
-            
-            // Log for debugging
-            console.log('Language system initialized with:', langToUse);
-        });
-    </script>
 </head>
 <body>
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <div class="language-selector">
-                <select id="languageSelect" onchange="changeLanguage(this.value)">
-                    <option value="es">🇪🇸 Español</option>
-                    <option value="en">🇬🇧 English</option>
-                    <option value="pt">🇧🇷 Português</option>
-                    <option value="fr">🇫🇷 Français</option>
-                    <option value="de">🇩🇪 Deutsch</option>
-                    <option value="it">🇮🇹 Italiano</option>
-                    <option value="ja">🇯🇵 日本語</option>
-                    <option value="ru">🇷🇺 Русский</option>
-                </select>
-            </div>
             <div class="header-content">
-                <div class="callsign" data-i18n="callsign">LU9ANG</div>
-                <div class="name" data-i18n="name">Alvaro Garcia</div>
+                <div class="callsign">LU9ANG</div>
+                <div class="name">Alvaro Garcia <span class="flag-icon">🇦🇷</span></div>
                 <div class="titles">
-                    <div class="title-item" data-i18n="title1">Consultor Experto en Gestión de Datos en AWS</div>
-                    <div class="title-item" data-i18n="title2">Ingeniero de Datos Senior & Radio Aficionado</div>
+                    <div class="title-item">Consultor Experto en Gestión de Datos en AWS</div>
+                    <div class="title-item">Ingeniero de Datos Senior & Radio Aficionado</div>
                 </div>
             </div>
         </div>
@@ -658,24 +385,43 @@
             <div class="left-column">
                 <!-- About Section -->
                 <section class="section">
-                    <h2 class="section-title" data-i18n="aboutTitle">Acerca de Mí</h2>
-                    <p class="bio-text" data-i18n="aboutText">
+                    <h2 class="section-title">Acerca de Mí</h2>
+                    <p class="bio-text">
                         Consultor especializado en arquitecturas de datos en AWS. Fuera del ámbito profesional, soy radio aficionado apasionado. Operador activo en VHF desde Argentina con planes de incursionar en HF modo QRP, y con interés en activaciones SOTA, POTA y BOTA. Combiné mi experiencia técnica con la radio afición de una manera genuina y complementaria.
                     </p>
                 </section>
 
+                <!-- Location Section -->
+                <section class="section">
+                    <h2 class="section-title">Mi Ubicación</h2>
+                    <div class="location-links">
+                        <div class="location-item">
+                            <a href="https://es.wikipedia.org/wiki/Argentina" target="_blank" rel="noopener">Argentina</a>
+                        </div>
+                        <div class="location-item">
+                            <a href="https://es.wikipedia.org/wiki/Buenos_Aires" target="_blank" rel="noopener">Buenos Aires (Provincia)</a>
+                        </div>
+                        <div class="location-item">
+                            <a href="https://es.wikipedia.org/wiki/La_Matanza_(Buenos_Aires)" target="_blank" rel="noopener">La Matanza (Partido)</a>
+                        </div>
+                        <div class="location-item">
+                            <a href="https://es.wikipedia.org/wiki/Villa_Madero" target="_blank" rel="noopener">Villa Madero (Localidad)</a>
+                        </div>
+                    </div>
+                </section>
+
                 <!-- Equipment Section -->
                 <section class="section">
-                    <h2 class="section-title" data-i18n="equipmentTitle">Equipamiento</h2>
+                    <h2 class="section-title">Equipamiento</h2>
                     
-                    <div class="section-subtitle" data-i18n="transceivers">Transceptores</div>
+                    <div class="section-subtitle">Transceptores</div>
                     <div class="equipment-grid">
                         <div class="equipment-box">Baofeng UV32</div>
                         <div class="equipment-box">Anytone AT-778UV</div>
                         <div class="equipment-box">Xiegu X6200</div>
                     </div>
 
-                    <div class="section-subtitle" data-i18n="antennas">Antenas</div>
+                    <div class="section-subtitle">Antenas</div>
                     <div class="equipment-grid">
                         <div class="equipment-box">Antena Ringo VHF</div>
                         <div class="equipment-box">Antena QRP Guys EFHW</div>
@@ -688,30 +434,30 @@
             <div class="right-column">
                 <!-- Radio Activity -->
                 <section class="section">
-                    <h2 class="section-title" data-i18n="radioTitle">Actividad de Radio</h2>
+                    <h2 class="section-title">Actividad de Radio</h2>
                     
                     <div class="radio-section">
                         <div class="radio-item">
                             <div class="radio-icon">📡</div>
                             <div class="radio-content">
-                                <h4 data-i18n="vhfTitle">Operación VHF</h4>
-                                <p data-i18n="vhfText">Operador activo en VHF desde Argentina, participando regularmente en actividades locales y redes digitales.</p>
+                                <h4>Operación VHF</h4>
+                                <p>Operador activo en VHF desde Argentina, participando regularmente en actividades locales y redes digitales.</p>
                             </div>
                         </div>
 
                         <div class="radio-item">
                             <div class="radio-icon">🔧</div>
                             <div class="radio-content">
-                                <h4 data-i18n="techTitle">Proyectos Técnicos</h4>
-                                <p data-i18n="techText">Experiencia en configuración de equipamiento, repetidores, y sistemas digitales. Interés en MMDVM y hotspots.</p>
+                                <h4>Proyectos Técnicos</h4>
+                                <p>Experiencia en configuración de equipamiento, repetidores, y sistemas digitales. Interés en MMDVM y hotspots.</p>
                             </div>
                         </div>
 
                         <div class="radio-item">
                             <div class="radio-icon">⛰️</div>
                             <div class="radio-content">
-                                <h4 data-i18n="activationTitle">Futuras Activaciones</h4>
-                                <p data-i18n="activationText">Planes para incursionar en HF con operación QRP y participación en SOTA, POTA y BOTA a medida que expanda mis habilidades.</p>
+                                <h4>Futuras Activaciones</h4>
+                                <p>Planes para incursionar en HF con operación QRP y participación en SOTA, POTA y BOTA a medida que expanda mis habilidades.</p>
                             </div>
                         </div>
                     </div>

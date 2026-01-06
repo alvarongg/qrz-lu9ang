@@ -25,17 +25,18 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: var(--text-dark);
-            background: linear-gradient(135deg, #f8f9fa 0%, #f0f4ff 100%);
+            background: white;
             min-height: 100vh;
-            padding: 20px;
+            padding: 0;
+            margin: 0;
         }
 
         .container {
-            max-width: 900px;
-            margin: 0 auto;
+            max-width: 100%;
+            margin: 0;
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0, 102, 204, 0.1);
+            border-radius: 0;
+            box-shadow: none;
             overflow: hidden;
         }
 
@@ -43,7 +44,7 @@
         .header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
-            padding: 60px 40px;
+            padding: 30px 40px;
             position: relative;
             overflow: hidden;
         }
@@ -65,29 +66,35 @@
         }
 
         .callsign {
-            font-size: 2.2em;
+            font-size: 1.8em;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             letter-spacing: 2px;
             font-family: 'Courier New', monospace;
+            display: inline-block;
+            margin-right: 20px;
         }
 
         .name {
-            font-size: 2.8em;
+            font-size: 2em;
             font-weight: 700;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
+            display: inline-block;
         }
 
         .titles {
-            font-size: 1.1em;
+            font-size: 0.95em;
             opacity: 0.95;
-            margin-top: 20px;
+            margin-top: 10px;
             border-top: 2px solid rgba(255,255,255,0.3);
-            padding-top: 15px;
+            padding-top: 10px;
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
         }
 
         .title-item {
-            margin: 8px 0;
+            margin: 0;
             display: flex;
             align-items: center;
         }
@@ -100,11 +107,27 @@
 
         /* Main Content */
         .content {
-            padding: 50px 40px;
+            padding: 30px 40px;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
         }
 
         .section {
-            margin-bottom: 45px;
+            margin-bottom: 0;
         }
 
         .section:last-child {
@@ -112,49 +135,50 @@
         }
 
         .section-title {
-            font-size: 1.6em;
+            font-size: 1.3em;
             font-weight: 700;
             color: var(--primary);
-            margin-bottom: 20px;
-            padding-bottom: 12px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
             border-bottom: 3px solid var(--secondary);
             display: inline-block;
         }
 
         .section-subtitle {
-            font-size: 1.2em;
+            font-size: 1em;
             font-weight: 600;
             color: var(--primary-dark);
-            margin-top: 25px;
-            margin-bottom: 15px;
+            margin-top: 15px;
+            margin-bottom: 10px;
         }
 
         .bio-text {
             color: var(--text-light);
-            margin-bottom: 15px;
-            line-height: 1.8;
-            font-size: 1em;
+            margin-bottom: 10px;
+            line-height: 1.6;
+            font-size: 0.95em;
         }
 
         /* Equipment Grid */
         .equipment-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
         }
 
         .equipment-box {
             background: linear-gradient(135deg, rgba(0, 102, 204, 0.05) 0%, rgba(255, 107, 53, 0.05) 100%);
             border: 2px solid var(--primary);
             border-radius: 8px;
-            padding: 18px;
+            padding: 12px;
             font-weight: 500;
             color: var(--primary);
             text-align: center;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            font-size: 0.9em;
         }
 
         .equipment-box::before {
@@ -185,15 +209,15 @@
         .radio-section {
             background: linear-gradient(135deg, rgba(0, 102, 204, 0.05) 0%, rgba(255, 107, 53, 0.05) 100%);
             border-left: 4px solid var(--secondary);
-            padding: 25px;
+            padding: 20px;
             border-radius: 8px;
-            margin: 25px 0;
+            margin: 15px 0;
         }
 
         .radio-item {
             display: flex;
             align-items: flex-start;
-            margin-bottom: 18px;
+            margin-bottom: 15px;
         }
 
         .radio-item:last-child {
@@ -201,54 +225,59 @@
         }
 
         .radio-icon {
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             background: var(--secondary);
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 15px;
+            margin-right: 12px;
             flex-shrink: 0;
             font-weight: bold;
-            font-size: 1.2em;
+            font-size: 1em;
         }
 
         .radio-content h4 {
             color: var(--primary);
-            margin-bottom: 5px;
+            margin-bottom: 4px;
+            font-size: 1em;
         }
 
         .radio-content p {
             color: var(--text-light);
-            font-size: 0.95em;
+            font-size: 0.85em;
+            line-height: 1.5;
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
+            .content {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
             .header {
-                padding: 40px 25px;
+                padding: 25px 30px;
             }
 
             .content {
-                padding: 30px 25px;
+                padding: 25px 30px;
             }
 
-            .name {
-                font-size: 2em;
+            .callsign, .name {
+                display: block;
+                margin-right: 0;
             }
 
             .titles {
-                font-size: 0.95em;
+                flex-direction: column;
+                gap: 8px;
             }
 
             .equipment-grid {
                 grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            }
-
-            .section-title {
-                font-size: 1.4em;
             }
         }
 
@@ -303,66 +332,69 @@
 
         <!-- Main Content -->
         <div class="content">
-            <!-- About Section -->
-            <section class="section">
-                <h2 class="section-title">Acerca de Mí</h2>
-                <p class="bio-text">
-                    Consultor especializado en arquitecturas de datos en AWS. Fuera del ámbito profesional, soy radio aficionado apasionado. Operador activo en VHF desde Argentina con planes de incursionar en HF modo QRP, y con interés en activaciones SOTA, POTA y BOTA. Combiné mi experiencia técnica con la radio afición de una manera genuina y complementaria.
-                </p>
-            </section>
+            <!-- Left Column -->
+            <div class="left-column">
+                <!-- About Section -->
+                <section class="section">
+                    <h2 class="section-title">Acerca de Mí</h2>
+                    <p class="bio-text">
+                        Consultor especializado en arquitecturas de datos en AWS. Fuera del ámbito profesional, soy radio aficionado apasionado. Operador activo en VHF desde Argentina con planes de incursionar en HF modo QRP, y con interés en activaciones SOTA, POTA y BOTA. Combiné mi experiencia técnica con la radio afición de una manera genuina y complementaria.
+                    </p>
+                </section>
 
-            <!-- Equipment Section -->
-            <section class="section">
-                <h2 class="section-title">Equipamiento</h2>
-                
-                <div class="section-subtitle">Transceptores</div>
-                <div class="equipment-grid">
-                    <div class="equipment-box">Baofeng UV32</div>
-                    <div class="equipment-box">Anytone AT-778UV</div>
-                    <div class="equipment-box">Xiegu X6200</div>
-                </div>
-
-                <div class="section-subtitle">Antenas</div>
-                <div class="equipment-grid">
-                    <div class="equipment-box">Antena Ringo VHF</div>
-                    <div class="equipment-box">Antena QRP Guys EFHW</div>
-                    <div class="equipment-box">Antena JPC12</div>
-                </div>
-            </section>
-
-            <!-- Radio Activity -->
-            <section class="section">
-                <h2 class="section-title">Actividad de Radio</h2>
-                
-                <div class="radio-section">
-                    <div class="radio-item">
-                        <div class="radio-icon">📡</div>
-                        <div class="radio-content">
-                            <h4>Operación VHF</h4>
-                            <p>Operador activo en VHF desde Argentina, participando regularmente en actividades locales y redes digitales.</p>
-                        </div>
+                <!-- Equipment Section -->
+                <section class="section">
+                    <h2 class="section-title">Equipamiento</h2>
+                    
+                    <div class="section-subtitle">Transceptores</div>
+                    <div class="equipment-grid">
+                        <div class="equipment-box">Baofeng UV32</div>
+                        <div class="equipment-box">Anytone AT-778UV</div>
+                        <div class="equipment-box">Xiegu X6200</div>
                     </div>
 
-                    <div class="radio-item">
-                        <div class="radio-icon">🔧</div>
-                        <div class="radio-content">
-                            <h4>Proyectos Técnicos</h4>
-                            <p>Experiencia en configuración de equipamiento, repetidores, y sistemas digitales. Interés en MMDVM y hotspots.</p>
+                    <div class="section-subtitle">Antenas</div>
+                    <div class="equipment-grid">
+                        <div class="equipment-box">Antena Ringo VHF</div>
+                        <div class="equipment-box">Antena QRP Guys EFHW</div>
+                        <div class="equipment-box">Antena JPC12</div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Column -->
+            <div class="right-column">
+                <!-- Radio Activity -->
+                <section class="section">
+                    <h2 class="section-title">Actividad de Radio</h2>
+                    
+                    <div class="radio-section">
+                        <div class="radio-item">
+                            <div class="radio-icon">📡</div>
+                            <div class="radio-content">
+                                <h4>Operación VHF</h4>
+                                <p>Operador activo en VHF desde Argentina, participando regularmente en actividades locales y redes digitales.</p>
+                            </div>
+                        </div>
+
+                        <div class="radio-item">
+                            <div class="radio-icon">🔧</div>
+                            <div class="radio-content">
+                                <h4>Proyectos Técnicos</h4>
+                                <p>Experiencia en configuración de equipamiento, repetidores, y sistemas digitales. Interés en MMDVM y hotspots.</p>
+                            </div>
+                        </div>
+
+                        <div class="radio-item">
+                            <div class="radio-icon">⛰️</div>
+                            <div class="radio-content">
+                                <h4>Futuras Activaciones</h4>
+                                <p>Planes para incursionar en HF con operación QRP y participación en SOTA, POTA y BOTA a medida que expanda mis habilidades.</p>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="radio-item">
-                        <div class="radio-icon">⛰️</div>
-                        <div class="radio-content">
-                            <h4>Futuras Activaciones</h4>
-                            <p>Planes para incursionar en HF con operación QRP y participación en SOTA, POTA y BOTA a medida que expanda mis habilidades.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Interests & Hobbies -->
-            
+                </section>
+            </div>
         </div>
     </div>
 </body>

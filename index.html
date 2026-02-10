@@ -300,6 +300,51 @@
             font-size: 1.2em;
         }
 
+        /* QSL Marquee */
+        .qsl-marquee-wrapper {
+            overflow: hidden;
+            border-radius: 8px;
+            border: 2px solid var(--primary);
+            background: linear-gradient(135deg, rgba(0, 102, 204, 0.05) 0%, rgba(255, 107, 53, 0.05) 100%);
+            padding: 10px 0;
+        }
+
+        .qsl-marquee-track {
+            display: flex;
+            width: max-content;
+            animation: qsl-scroll 10s ease-in-out infinite alternate;
+        }
+
+        .qsl-marquee-track:hover {
+            animation-play-state: paused;
+        }
+
+        .qsl-marquee-item {
+            flex-shrink: 0;
+            width: 280px;
+            height: 180px;
+            margin: 0 10px;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        }
+
+        .qsl-marquee-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        @keyframes qsl-scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(-100% + 580px));
+            }
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .content {
@@ -405,6 +450,17 @@
                         </div>
                         <div class="location-item">
                             <a href="https://es.wikipedia.org/wiki/Villa_Madero_(Buenos_Aires)" target="_blank" rel="noopener">Villa Madero (Localidad)</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- QSL Section -->
+                <section class="section">
+                    <h2 class="section-title">QSL's</h2>
+                    <div class="qsl-marquee-wrapper">
+                        <div class="qsl-marquee-track">
+                            <!-- Agrega tus QSLs aca. Subi la imagen a qsl/ y agrega una linea -->
+                            <div class="qsl-marquee-item"><img src="qsl/LU9ANG.jpg" alt="QSL LU9ANG"></div>
                         </div>
                     </div>
                 </section>

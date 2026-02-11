@@ -577,6 +577,7 @@
             border: 2px solid var(--primary);
             background: linear-gradient(135deg, rgba(0, 102, 204, 0.05) 0%, rgba(255, 107, 53, 0.05) 100%);
             position: relative;
+            max-height: 340px;
         }
 
         .repeater-marquee-track {
@@ -1275,51 +1276,6 @@
         var wrappers = document.querySelectorAll('.qsl-marquee-wrapper, .awards-marquee-wrapper');
         for (var i = 0; i < wrappers.length; i++) {
             setupMarquee(wrappers[i]);
-        }
-
-        // Alinear altura de repetidoras con la columna derecha
-        function syncRepeaterHeight() {
-            var rightCol = document.querySelector('.right-column');
-            var repeaters = document.getElementById('repeaters-section');
-            var marquee = document.getElementById('repeater-marquee');
-            if (!rightCol || !repeaters || !marquee) return;
-            // En mobile (1 columna) usar altura fija
-            if (window.innerWidth <= 1024) {
-                marquee.style.maxHeight = '300px';
-                return;
-            }
-            // Calcular cuánto ocupa la columna derecha
-            var rightH = rightCol.offsetHeight;
-            // Calcular cuánto ocupan las secciones anteriores en la columna izquierda
-            var leftCol = document.querySelector('.left-column');
-            if (!leftCol) return;
-            var siblings = leftCol.children;
-            var usedH = 0;
-            for (var i = 0; i < siblings.length; i++) {
-                if (siblings[i] === repeaters) break;
-                usedH += siblings[i].offsetHeight;
-            }
-            // Sumar gaps entre secciones (30px gap * cantidad de secciones previas)
-            var prevCount = 0;
-            for (var j = 0; j < siblings.length; j++) {
-                if (siblings[j] === repeaters) break;
-                prevCount++;
-            }
-            usedH += prevCount * 30; // gap de left-column
-            // Altura del título de la sección repetidoras
-            var titleEl = repeaters.querySelector('.section-title');
-            var titleH = titleEl ? titleEl.offsetHeight + 15 : 0; // +15 por margin-bottom
-            // Espacio disponible = altura columna derecha - lo usado arriba - título
-            var available = rightH - usedH - titleH - 30; // 30 = gap extra
-            if (available > 150) {
-                marquee.style.maxHeight = available + 'px';
-            } else {
-                marquee.style.maxHeight = '300px'; // fallback mínimo
-            }
-        }
-        syncRepeaterHeight();
-        if (window.addEventListener) {
-            window.addEventListener('resize', syncRepeaterHeight);
         }
     })();
     </script>

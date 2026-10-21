@@ -4,7 +4,9 @@ update_stats.py - Actualiza las estadísticas de actividad y el logbook
 de búsqueda en index.html usando la API de QRZ Logbook.
 
 Uso:
-    python3 update_stats.py --api-key TU-API-KEY-DE-QRZ
+    export QRZ_API_KEY=...   # en tu terminal, sin guardarla en archivos
+    python3 update_stats.py
+    (alternativa: python3 update_stats.py --api-key ...)
 
 Para obtener tu API key:
     1. Ingresa a https://logbook.qrz.com/logbook
@@ -19,6 +21,7 @@ El script:
 """
 
 import argparse
+import os
 import re
 import sys
 import urllib.request
@@ -158,7 +161,6 @@ def update_html(stats):
 
 def update_logbook_csv(csv_content):
     """Escribe el archivo data/logbook.csv."""
-    import os
     os.makedirs("data", exist_ok=True)
     with open("data/logbook.csv", "w", encoding="utf-8") as f:
         f.write(csv_content)
@@ -170,10 +172,13 @@ def main():
     )
     parser.add_argument(
         "--api-key",
-        required=True,
-        help="Tu API Key de QRZ Logbook (Settings > API Key)"
+        default=os.environ.get("QRZ_API_KEY"),
+        help="Tu API Key de QRZ Logbook (Settings > API Key). "
+             "Por defecto se lee de la variable de entorno QRZ_API_KEY"
     )
     args = parser.parse_args()
+    if not args.api_key:
+        parser.error("falta la API key: definí QRZ_API_KEY o usá --api-key")
 
     print("📡 Descargando QSOs desde QRZ...")
     raw = fetch_qsos(args.api_key)

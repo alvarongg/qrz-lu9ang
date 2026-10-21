@@ -1158,8 +1158,15 @@
             <div class="gallery-col">
                 <h2 class="section-title">QSL's</h2>
                 <div class="qsl-marquee-wrapper">
-                    <div class="qsl-marquee-track">
+                    <div class="qsl-marquee-track" id="qsl-track">
                         <div class="qsl-marquee-item"><img src="qsl/LU9ANG.jpg" alt="QSL LU9ANG"></div>
+                        <div class="qsl-marquee-item"><img src="qsl/10901997-LU3CM.jpg" alt="QSL LU3CM"></div>
+                        <div class="qsl-marquee-item"><img src="qsl/10901995-AZ8H.jpg" alt="QSL AZ8H"></div>
+                        <div class="qsl-marquee-item"><img src="qsl/10901992-LW8DO.jpg" alt="QSL LW8DO"></div>
+                        <div class="qsl-marquee-item"><img src="qsl/10901988-LW9EUE.jpg" alt="QSL LW9EUE"></div>
+                        <div class="qsl-marquee-item"><img src="qsl/10901986-LU6HOG.jpg" alt="QSL LU6HOG"></div>
+                        <div class="qsl-marquee-item"><img src="qsl/10901985-LU8EMI.jpg" alt="QSL LU8EMI"></div>
+                        <div class="qsl-marquee-item"><img src="qsl/10901984-LU8EMI.jpg" alt="QSL LU8EMI"></div>
                     </div>
                 </div>
             </div>
@@ -1292,10 +1299,47 @@
             track.style.animationName = id;
             style.textContent = '@keyframes ' + id + ' { 0% { transform: translateX(0); } 100% { transform: translateX(-' + dist + 'px); } }';
         }
-        var wrappers = document.querySelectorAll('.qsl-marquee-wrapper, .awards-marquee-wrapper');
-        for (var i = 0; i < wrappers.length; i++) {
-            setupMarquee(wrappers[i]);
+        function setupAll() {
+            var wrappers = document.querySelectorAll('.qsl-marquee-wrapper, .awards-marquee-wrapper');
+            for (var i = 0; i < wrappers.length; i++) {
+                setupMarquee(wrappers[i]);
+            }
         }
+
+        // QSLs dinámicas: lista la carpeta qsl/ del repo via GitHub API.
+        // Si falla (sin red, rate limit), queda el HTML estático como respaldo.
+        function loadQSLs(done) {
+            var track = document.getElementById('qsl-track');
+            if (!track || !window.fetch) return done();
+            fetch('https://api.github.com/repos/alvarongg/qrz-lu9ang/contents/qsl')
+                .then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+                .then(function(files) {
+                    var names = files.map(function(f) { return f.name; })
+                        .filter(function(n) { return /\.(jpe?g|png|webp)$/i.test(n); });
+                    if (!names.length) return;
+                    // Propia primero, el resto de mas nueva a mas vieja
+                    names.sort(function(a, b) {
+                        var pa = /^LU9ANG\./i.test(a), pb = /^LU9ANG\./i.test(b);
+                        if (pa !== pb) return pa ? -1 : 1;
+                        return b.localeCompare(a);
+                    });
+                    track.innerHTML = '';
+                    names.forEach(function(n) {
+                        var call = n.replace(/\.[^.]+$/, '').replace(/^\d+-/, '');
+                        var item = document.createElement('div');
+                        item.className = 'qsl-marquee-item';
+                        var img = document.createElement('img');
+                        img.src = 'qsl/' + encodeURIComponent(n);
+                        img.alt = 'QSL ' + call;
+                        item.appendChild(img);
+                        track.appendChild(item);
+                    });
+                })
+                .catch(function() {})
+                .then(done);
+        }
+
+        loadQSLs(setupAll);
     })();
     </script>
 </body>
